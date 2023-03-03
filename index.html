@@ -1,0 +1,51 @@
+<table class="usr-width-100">
+  {% assign first_header = 'income' %}
+  {% assign second_header = 'expenses' %}
+  {% t= "just_some_translation_tag" default:"Left side total" %}
+  {% t= "just_some_translation_tag_2" en:"Right side total" %}
+  <thead>
+    <tr>
+      <th class= "usr-align-left" colspan="2"><b>{{ first_header }}</b></th>
+      <th class= "usr-align-right" colspan="2"><b>{{ second_header }}</b></th>
+    </tr>
+    <tr>
+      <th class="usr-width-25"><b>{% t "Current year" %}</b></th>
+      <th class="usr-width-25"><b>{% t "Previous year" %}</b></th>
+      <th class="usr-width-25"><b>Current year (2)</b></th>
+      <th class="usr-width-25"><b>Previous year (3)</b><</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        {% ic %}{::warningtext as='hover'}{% t "Warning: always click this boolean button" %}{:/warningtext}{% endic %}
+        {% input custom.test1.suffix as:boolean %}
+      </td>
+      <td>{% input custom.test2.suffix as:account_collection range:'6,7' required:true %}</td>
+      <td>{% input custom.test3.suffix as:select options:'1|2|3' %}</td>
+      <td>
+        {% if show_input_field %}
+          {% input custom.test4.suffix as:text placeholder:'enter some text' %}
+        {% else %}
+          &nbsp;
+        {% endif %}      
+      </td>
+    </tr>
+    <tr>
+      {% assign def_amount = '1234' %}
+      <td>{% input custom.test5.suffix as:currency precision:2 default:def_amount %}</td>
+      <td class='usr-line-left'>{% input custom.test6.suffix as:percentage required:true %}</td>
+      <td class='usr-double-line-bottom'>
+        {% unreconciled custom.test5.suffix as:indicator %}
+        {{ custom.test5.suffix | round | currency:0 }}
+      </td>
+      <td>{{ custom.test5.suffix | round | percentage }}</td>
+    </tr>
+    <tr>
+      <td class='usr-align-center' colspan='2'>{% t "just_some_translation_tag" %}</td>
+      <td class='usr-align-center' colspan='2'>{% t "just_some_translation_tag_2" %}</td>
+    </tr>
+    {% assign send_amount = custom.test5.suffix+25 %}
+  </tbody>
+  {% result 'test' send_amount %}
+</table>
